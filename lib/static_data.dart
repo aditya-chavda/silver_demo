@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+import 'models/category.dart';
 
-const data = [
+const chatData = [
   {
     "profile_pic_url": "https://randomuser.me/api/portraits/men/1.jpg",
     "name": "John Doe",
@@ -215,194 +213,117 @@ const data = [
   },
 ];
 
-class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
-
-  @override
-  State<ChatScreen> createState() => _ChatScreenState();
-}
-
-class _ChatScreenState extends State<ChatScreen> {
-  static const _todayKey = ValueKey('TodayMarker');
-
-  final scrollController = ScrollController();
-
-  var isLoading = '';
-
-  var pastData = <Map>[];
-  final currentData = data.sublist(10, 21);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        surfaceTintColor: Colors.blue,
-        title: Row(
-          children: [
-            CircleAvatar(
-              radius: 22,
-              foregroundImage: Image.network(
-                data[1]['profile_pic_url'].toString(),
-              ).image,
-            ),
-            const SizedBox(width: 12),
-            Text(data[1]['name'].toString()),
-          ],
-        ),
-      ),
-      body: SafeArea(
-        bottom: false,
-        child: NotificationListener<ScrollEndNotification>(
-          onNotification: (notification) {
-            // Note, this will listen to only immediate scroll events.
-            if (notification.depth == 0) {
-              // Only if we're dragging in that direction will we try to load in
-              // more items.
-              final primaryVelocity =
-                  notification.dragDetails?.primaryVelocity ?? 0;
-
-              if (notification.metrics.extentBefore == 0) {
-                _loadBefore(-40);
-              }
-
-              if (notification.metrics.extentAfter == 0) {
-                _loadAfter(notification.metrics.maxScrollExtent + 40);
-              }
-            }
-
-            return false;
-          },
-          child: CustomScrollView(
-            controller: scrollController,
-            center: _todayKey,
-            slivers: [
-              // ParallaxSliver(
-              //   parallaxFactor: 0.8,
-              //   child: Image.network(
-              //     'https://www.dictionary.com/e/wp-content/uploads/2019/09/1000x700_peek_pique_peak-790x310.jpg',
-              //     height: 300,
-              //     fit: BoxFit.cover,
-              //   ),
-              // ),
-              if (isLoading == 'before')
-                const SliverToBoxAdapter(
-                  child: CupertinoActivityIndicator(
-                    radius: 15,
-                    color: Colors.black,
-                  ),
-                )
-              else if (pastData.isNotEmpty)
-                MessageView(data: pastData, reverse: true),
-              const SliverToBoxAdapter(child: SizedBox(height: 10)),
-              const SliverToBoxAdapter(
-                key: _todayKey,
-                child: Align(
-                  child: Text(
-                    'Today',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-              MessageView(data: currentData),
-              if (isLoading == 'after') ...[
-                const SliverPadding(
-                  padding: EdgeInsets.only(top: 10),
-                  sliver: SliverToBoxAdapter(
-                    child: CupertinoActivityIndicator(
-                      radius: 15,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ],
-              const SliverToBoxAdapter(child: SizedBox(height: 30)),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Future<void> _loadBefore(double offset) async {
-    if (isLoading.isNotEmpty || pastData.isNotEmpty) return;
-    setState(() => isLoading = 'before');
-    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      scrollController.animateTo(
-        offset,
-        duration: const Duration(milliseconds: 400),
-        curve: Curves.ease,
-      );
-    });
-    await Future.delayed(const Duration(seconds: 2));
-    pastData = data.sublist(0, 10);
-    setState(() => isLoading = '');
-  }
-
-  Future<void> _loadAfter(double offset) async {
-    if (isLoading.isNotEmpty || currentData.length > 12) return;
-    setState(() => isLoading = 'after');
-    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      scrollController.animateTo(
-        offset,
-        duration: const Duration(milliseconds: 400),
-        curve: Curves.ease,
-      );
-    });
-    await Future.delayed(const Duration(seconds: 2));
-    currentData.addAll(data.sublist(21));
-    setState(() => isLoading = '');
-  }
-}
-
-class MessageView extends StatelessWidget {
-  const MessageView({
-    required this.data,
-    this.reverse = false,
-    super.key,
-  });
-
-  final List<Map> data;
-  final bool reverse;
-
-  @override
-  Widget build(BuildContext context) {
-    ListView;
-    return SliverList.builder(
-      itemCount: data.length,
-      itemBuilder: (context, index) {
-        final msg = reverse ? data[(data.length - 1) - index] : data[index];
-        final name = msg['name'];
-        final isSender = name == 'John Doe';
-        return Align(
-          alignment:
-              isSender ? Alignment.centerRight : FractionalOffset.centerLeft,
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              maxWidth: MediaQuery.sizeOf(context).width * 0.7,
-            ),
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              margin: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 8,
-              ),
-              decoration: BoxDecoration(
-                color: isSender ? Colors.blue : Colors.grey.shade200,
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(28),
-                ),
-              ),
-              child: Text(
-                msg['msg_text'].toString(),
-                style: TextStyle(
-                  color: isSender ? Colors.white : Colors.black,
-                  fontSize: 18,
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
+const homeData = [
+  CategoryDm(
+    id: "101",
+    name: "Grocery & Kitchen",
+    subcategories: [
+      SubcategoryDm(
+          name: "Vegetables & Fruits",
+          imageUrl: "https://example.com/fresh-fruits.jpg"),
+      SubcategoryDm(
+          name: "Atta, Rice & Dal",
+          imageUrl: "https://example.com/fresh-vegetables.jpg"),
+      SubcategoryDm(
+          name: "Oil, Ghee & Masala",
+          imageUrl: "https://example.com/exotic-fruits.jpg"),
+      SubcategoryDm(
+          name: "Dairy, Bread & Eggs",
+          imageUrl: "https://example.com/exotic-vegetables.jpg"),
+      SubcategoryDm(
+          name: "Bakery & Biscuits",
+          imageUrl: "https://example.com/organic-fruits.jpg"),
+      SubcategoryDm(
+          name: "Dry Fruits & Cereals",
+          imageUrl: "https://example.com/organic-vegetables.jpg"),
+      SubcategoryDm(
+          name: "Kitchenware & Appliances",
+          imageUrl: "https://example"
+              ".com/cut-peeled"
+              ".jpg"),
+      SubcategoryDm(
+          name: "Herbs & Seasoning",
+          imageUrl: "https://example.com/herbs-seasoning.jpg"),
+    ],
+  ),
+  CategoryDm(
+    id: "103",
+    name: "Snacks & Drinks",
+    subcategories: [
+      SubcategoryDm(
+          name: "Chips & Namkeen", imageUrl: "https://example.com/chips.jpg"),
+      SubcategoryDm(
+          name: "Biscuits & Cookies",
+          imageUrl: "https://example.com/biscuits.jpg"),
+      SubcategoryDm(
+          name: "Chocolates & Sweets",
+          imageUrl: "https://example.com/chocolates.jpg"),
+      SubcategoryDm(
+          name: "Drinks & Juices", imageUrl: "https://example.com/juices.jpg"),
+      SubcategoryDm(
+          name: "Tea, Coffee & Milk Drinks",
+          imageUrl: "https://example"
+              ".com/tea-coffee.jpg"),
+      SubcategoryDm(
+          name: "Ice creams & More",
+          imageUrl: "https://example.com/energy-drinks.jpg"),
+      SubcategoryDm(
+          name: "Instant Food & Soups",
+          imageUrl: "https://example.com/noodles.jpg"),
+      SubcategoryDm(
+          name: "Dry Fruits & Nuts",
+          imageUrl: "https://example.com/dry-fruits.jpg"),
+    ],
+  ),
+  CategoryDm(
+    id: "104",
+    name: "Household Essentials",
+    subcategories: [
+      SubcategoryDm(
+          name: "Detergents & Dishwash",
+          imageUrl: "https://example.com/detergents.jpg"),
+      SubcategoryDm(
+          name: "Room & Car Fresheners",
+          imageUrl: "https://example.com/cleaning-supplies.jpg"),
+      SubcategoryDm(
+          name: "Paper & Disposables",
+          imageUrl: "https://example.com/paper.jpg"),
+      SubcategoryDm(
+          name: "Cleaners & Repellents",
+          imageUrl: "https://example.com/air-fresheners.jpg"),
+      SubcategoryDm(
+          name: "Stationery & Games",
+          imageUrl: "https://example.com/storage"
+              ".jpg"),
+      SubcategoryDm(
+          name: "Home & Lifestyle", imageUrl: "https://example.com/pooja.jpg"),
+      SubcategoryDm(
+          name: "Batteries & Electricals",
+          imageUrl: "https://example.com/batteries.jpg"),
+      SubcategoryDm(
+          name: "Kitchen Essentials",
+          imageUrl: "https://example.com/kitchen.jpg"),
+    ],
+  ),
+  CategoryDm(
+    id: "102",
+    name: "Dairy & Milk",
+    subcategories: [
+      SubcategoryDm(name: "Milk", imageUrl: "https://example.com/milk.jpg"),
+      SubcategoryDm(name: "Cheese", imageUrl: "https://example.com/cheese.jpg"),
+      SubcategoryDm(name: "Butter", imageUrl: "https://example.com/butter.jpg"),
+      SubcategoryDm(
+          name: "Yogurt & Curd", imageUrl: "https://example.com/yogurt.jpg"),
+      SubcategoryDm(
+          name: "Paneer & Soya Chunks",
+          imageUrl: "https://example.com/paneer"
+              ".jpg"),
+      SubcategoryDm(
+          name: "Breads & Buns", imageUrl: "https://example.com/bread.jpg"),
+      SubcategoryDm(
+          name: "Cakes & Pastries", imageUrl: "https://example.com/cakes.jpg"),
+      SubcategoryDm(
+          name: "Cookies & Rusk", imageUrl: "https://example.com/cookies.jpg"),
+    ],
+  ),
+];

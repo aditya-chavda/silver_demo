@@ -5,347 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import 'chat_screen.dart';
-
-class TwitterStyleProfile extends StatefulWidget {
-  final String username;
-  final String headerImageUrl;
-
-  const TwitterStyleProfile({
-    Key? key,
-    required this.username,
-    required this.headerImageUrl,
-  }) : super(key: key);
-
-  @override
-  State<TwitterStyleProfile> createState() => _TwitterStyleProfileState();
-}
-
-class _TwitterStyleProfileState extends State<TwitterStyleProfile>
-    with SingleTickerProviderStateMixin {
-  final scrollOffset = ValueNotifier(0.0);
-  ScrollController? _scrollController;
-  static final stickyKey = GlobalKey(debugLabel: 'sticky');
-  late final tabController = TabController(length: 4, vsync: this);
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController = ScrollController()
-      ..addListener(() => scrollOffset.value = _scrollController?.offset ?? 0);
-  }
-
-  @override
-  void dispose() {
-    _scrollController?.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: NestedScrollView(
-        controller: _scrollController,
-        physics: const BouncingScrollPhysics(
-          parent: AlwaysScrollableScrollPhysics(),
-        ),
-        headerSliverBuilder: (context, __) => [
-          SliverAppBar(
-            pinned: true,
-            stretch: true,
-            onStretchTrigger: () async {},
-            expandedHeight: 200,
-            leadingWidth: 54,
-            leading: Padding(
-              padding: const EdgeInsets.only(left: 18),
-              child: CircleIcon(
-                icon: Icons.arrow_back,
-                onTap: Navigator.of(context).pop,
-              ),
-            ),
-            actions: [
-              const CircleIcon(icon: Icons.search),
-              const SizedBox(width: 12),
-              CircleIcon(
-                icon: Icons.chat_bubble_outline_rounded,
-                onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => const ChatScreen(),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 18),
-            ],
-            title: Stack(
-              clipBehavior: Clip.none,
-              children: [
-                const SizedBox(height: 20),
-                ValueListenableBuilder(
-                  valueListenable: scrollOffset,
-                  builder: (context, offset, child) {
-                    return Positioned(
-                      bottom: (offset - 219).clamp(-150, -10),
-                      child: child!,
-                    );
-                  },
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.username,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const Text(
-                        '20.4K posts',
-                        style: TextStyle(fontSize: 14),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            flexibleSpace: FlexibleSpaceBar(
-              onLoadingDone: () {
-                _scrollController?.animateTo(
-                  332,
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInSine,
-                );
-              },
-              stretchModes: const [
-                StretchMode.zoomBackground,
-                StretchMode.blurBackground,
-              ],
-              background: Image.network(
-                widget.headerImageUrl,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.all(16),
-            sliver: SliverToBoxAdapter(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        widget.username,
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Text('@aditya_chavda'),
-                  const SizedBox(height: 16),
-                  const Text('Flutter Developer @ Simform Solutions'),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.location_on_outlined,
-                        color: Colors.grey,
-                      ),
-                      const SizedBox(width: 4),
-                      const Text('Ahmedabad, GU'),
-                      const SizedBox(width: 20),
-                      Transform.rotate(
-                        angle: (7 * math.pi) / 4,
-                        child: const Icon(
-                          Icons.link_rounded,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      const SizedBox(width: 4),
-                      const Text(
-                        'simform.com',
-                        style: TextStyle(color: Colors.blue),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  const Row(
-                    children: [
-                      Icon(Icons.calendar_month_rounded, color: Colors.grey),
-                      SizedBox(width: 4),
-                      Text('Joined April 2022'),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-          SliverPersistentHeader(
-            key: stickyKey,
-            delegate: TabBarHeader(tabController),
-            pinned: true,
-          ),
-        ],
-        body: TabBarView(
-          controller: tabController,
-          physics: const BouncingScrollPhysics(
-            parent: AlwaysScrollableScrollPhysics(),
-          ),
-          children: [
-            OverflowBar(
-              children: List.generate(
-                20,
-                (index) => ListTile(
-                  title: Text('Content Item ${index + 1}'),
-                ),
-              ),
-            ),
-            const Placeholder(),
-            const Placeholder(),
-            const Placeholder(),
-          ],
-          // List.generate(
-          //   4,
-          //       (index) {
-          //     return SafeArea(
-          //       top: false,
-          //       bottom: false,
-          //       child: Builder(
-          //         // This Builder is needed to provide a BuildContext that is
-          //         // "inside" the NestedScrollView, so that
-          //         // sliverOverlapAbsorberHandleFor() can find the
-          //         // NestedScrollView.
-          //         builder: (BuildContext context) {
-          //           return CustomScrollView(
-          //             // The "controller" and "primary" members should be left
-          //             // unset, so that the NestedScrollView can control this
-          //             // inner scroll view.
-          //             // If the "controller" property is set, then this scroll
-          //             // view will not be associated with the NestedScrollView.
-          //             // The PageStorageKey should be unique to this ScrollView;
-          //             // it allows the list to remember its scroll position when
-          //             // the tab view is not on the screen.
-          //             key: PageStorageKey<int>(index),
-          //             slivers: <Widget>[
-          //               SliverOverlapInjector(
-          //                 // This is the flip side of the SliverOverlapAbsorber
-          //                 // above.
-          //                 handle:
-          //                 NestedScrollView.sliverOverlapAbsorberHandleFor(
-          //                     context),
-          //               ),
-          //               SliverPadding(
-          //                 padding: const EdgeInsets.all(8.0),
-          //                 // In this example, the inner scroll view has
-          //                 // fixed-height list items, hence the use of
-          //                 // SliverFixedExtentList. However, one could use any
-          //                 // sliver widget here, e.g. SliverList or SliverGrid.
-          //                 sliver: SliverFixedExtentList(
-          //                   // The items in this example are fixed to 48 pixels
-          //                   // high. This matches the Material Design spec for
-          //                   // ListTile widgets.
-          //                   itemExtent: 48.0,
-          //                   delegate: SliverChildBuilderDelegate(
-          //                         (BuildContext context, int index) {
-          //                       // This builder is called for each child.
-          //                       // In this example, we just number each list item.
-          //                       return ListTile(title: Text('Item $index'));
-          //                     },
-          //                     // The childCount of the SliverChildBuilderDelegate
-          //                     // specifies how many children this inner list
-          //                     // has. In this example, each tab has a list of
-          //                     // exactly 30 items, but this is arbitrary.
-          //                     childCount: 30,
-          //                   ),
-          //                 ),
-          //               ),
-          //             ],
-          //           );
-          //         },
-          //       ),
-          //     );
-          //   },
-          // ),
-        ),
-      ),
-    );
-  }
-}
-
-class CircleIcon extends StatelessWidget {
-  const CircleIcon({
-    required this.icon,
-    this.onTap,
-    super.key,
-  });
-
-  final IconData icon;
-  final VoidCallback? onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      behavior: HitTestBehavior.translucent,
-      child: CircleAvatar(
-        radius: 18,
-        backgroundColor: Colors.black54,
-        child: Padding(
-          padding: const EdgeInsets.all(6),
-          child: Icon(icon, color: Colors.white),
-        ),
-      ),
-    );
-  }
-}
-
-class TabBarHeader extends SliverPersistentHeaderDelegate {
-  const TabBarHeader(this.controller);
-
-  final TabController controller;
-
-  static const _size = 48.0;
-
-  @override
-  double get maxExtent => _size;
-
-  @override
-  double get minExtent => _size;
-
-  @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return false;
-  }
-
-  @override
-  Widget build(
-    BuildContext context,
-    double shrinkOffset,
-    bool overlapsContent,
-  ) {
-    return Material(
-      color: Colors.white,
-      child: TabBar(
-        controller: controller,
-        isScrollable: true,
-        tabAlignment: TabAlignment.start,
-        indicatorColor: Colors.blue,
-        labelColor: Colors.blue,
-        splashFactory: NoSplash.splashFactory,
-        tabs: const [
-          Tab(text: 'Posts'),
-          Tab(text: 'Replies'),
-          Tab(text: 'Highlights'),
-          Tab(text: 'Media'),
-        ],
-      ),
-    );
-  }
-}
-
 enum LoadingState {
   idle,
   prepare,
@@ -377,14 +36,14 @@ enum LoadingState {
 /// overscroll, this space will stretch with the overscroll.
 ///
 /// The widget that sizes the [AppBar] must wrap it in the widget returned by
-/// [FlexibleSpaceBar.createSettings], to convey sizing information down to the
-/// [FlexibleSpaceBar].
+/// [MyFlexibleSpaceBar.createSettings], to convey sizing information down to the
+/// [MyFlexibleSpaceBar].
 ///
 /// {@tool dartpad}
 /// This sample application demonstrates the different features of the
-/// [FlexibleSpaceBar] when used in a [SliverAppBar]. This app bar is configured
+/// [MyFlexibleSpaceBar] when used in a [SliverAppBar]. This app bar is configured
 /// to stretch into the overscroll space, and uses the
-/// [FlexibleSpaceBar.stretchModes] to apply `fadeTitle`, `blurBackground` and
+/// [MyFlexibleSpaceBar.stretchModes] to apply `fadeTitle`, `blurBackground` and
 /// `zoomBackground`. The app bar also makes use of [CollapseMode.parallax] by
 /// default.
 ///
@@ -396,11 +55,11 @@ enum LoadingState {
 ///  * [SliverAppBar], which implements the expanding and contracting.
 ///  * [AppBar], which is used by [SliverAppBar].
 ///  * <https://material.io/design/components/app-bars-top.html#behavior>
-class FlexibleSpaceBar extends StatefulWidget {
+class MyFlexibleSpaceBar extends StatefulWidget {
   /// Creates a flexible space bar.
   ///
   /// Most commonly used in the [AppBar.flexibleSpace] field.
-  const FlexibleSpaceBar({
+  const MyFlexibleSpaceBar({
     super.key,
     this.title,
     this.background,
@@ -461,23 +120,23 @@ class FlexibleSpaceBar extends StatefulWidget {
   final double expandedTitleScale;
 
   /// Wraps a widget that contains an [AppBar] to convey sizing information down
-  /// to the [FlexibleSpaceBar].
+  /// to the [MyFlexibleSpaceBar].
   ///
   /// Used by [Scaffold] and [SliverAppBar].
   ///
   /// `toolbarOpacity` affects how transparent the text within the toolbar
   /// appears. `minExtent` sets the minimum height of the resulting
-  /// [FlexibleSpaceBar] when fully collapsed. `maxExtent` sets the maximum
-  /// height of the resulting [FlexibleSpaceBar] when fully expanded.
-  /// `currentExtent` sets the scale of the [FlexibleSpaceBar.background] and
-  /// [FlexibleSpaceBar.title] widgets of [FlexibleSpaceBar] upon
-  /// initialization. `scrolledUnder` is true if the [FlexibleSpaceBar]
+  /// [MyFlexibleSpaceBar] when fully collapsed. `maxExtent` sets the maximum
+  /// height of the resulting [MyFlexibleSpaceBar] when fully expanded.
+  /// `currentExtent` sets the scale of the [MyFlexibleSpaceBar.background] and
+  /// [MyFlexibleSpaceBar.title] widgets of [MyFlexibleSpaceBar] upon
+  /// initialization. `scrolledUnder` is true if the [MyFlexibleSpaceBar]
   /// overlaps the app's primary scrollable, false if it does not, and null
   /// if the caller has not determined as much.
   /// See also:
   ///
   ///  * [FlexibleSpaceBarSettings] which creates a settings object that can be
-  ///    used to specify these settings to a [FlexibleSpaceBar].
+  ///    used to specify these settings to a [MyFlexibleSpaceBar].
   static Widget createSettings({
     double? toolbarOpacity,
     double? minExtent,
@@ -499,10 +158,10 @@ class FlexibleSpaceBar extends StatefulWidget {
   }
 
   @override
-  State<FlexibleSpaceBar> createState() => _FlexibleSpaceBarState();
+  State<MyFlexibleSpaceBar> createState() => _MyFlexibleSpaceBarState();
 }
 
-class _FlexibleSpaceBarState extends State<FlexibleSpaceBar>
+class _MyFlexibleSpaceBarState extends State<MyFlexibleSpaceBar>
     with SingleTickerProviderStateMixin {
   var loadingState = LoadingState.idle;
 
