@@ -13,12 +13,12 @@ class SnackScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
             pinned: true,
             expandedHeight: 280,
+            automaticallyImplyLeading: false,
             backgroundColor: CupertinoColors.systemOrange.darkColor,
             flexibleSpace: const FlexibleSpaceBar(
               background: SnackProfile(),

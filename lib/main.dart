@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sliver_demo/screens/snack_screen.dart';
+import 'package:sliver_demo/screens/login_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,19 +18,25 @@ class MyApp extends StatelessWidget {
         SystemChannels.textInput.invokeMethod<void>('TextInput.hide');
       },
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Slivers Demo',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
+          scaffoldBackgroundColor: Colors.white,
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.lightBlueAccent,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(16),
+                ),
+              ),
+              backgroundColor: Colors.redAccent,
               foregroundColor: Colors.white,
               minimumSize: const Size(160, 50),
             ),
           ),
         ),
-        home: const SnackScreen(),
+        home: const LoginScreen(),
       ),
     );
   }

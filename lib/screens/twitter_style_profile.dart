@@ -30,7 +30,6 @@ class _TwitterStyleProfileState extends State<TwitterStyleProfile>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: NestedScrollView(
         controller: _scrollController,
         physics: const BouncingScrollPhysics(
