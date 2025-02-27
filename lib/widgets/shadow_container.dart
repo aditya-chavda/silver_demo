@@ -3,18 +3,17 @@ import 'package:flutter/material.dart';
 class ShadowContainer extends StatelessWidget {
   const ShadowContainer({
     required this.child,
+    this.padding = const EdgeInsets.all(12),
     super.key,
   });
 
   final Widget child;
+  final EdgeInsets padding;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 10,
-        vertical: 12,
-      ),
+      padding: padding,
       decoration: const BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -25,7 +24,7 @@ class ShadowContainer extends StatelessWidget {
           ),
         ],
         borderRadius: BorderRadius.all(
-          Radius.circular(16),
+          Radius.circular(14),
         ),
       ),
       child: child,

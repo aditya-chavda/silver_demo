@@ -5,26 +5,33 @@ class PrivacyFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.only(bottom: 32),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Text(
-            'By continuing, you agree to our',
-            style: TextStyle(fontSize: 16),
-          ),
-          SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text('Terms of Service'),
-              Text('Privacy Policy'),
-              Text('Content Policies'),
-            ],
-          ),
-        ],
-      ),
+    return const Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Text(
+          'By continuing, you agree to our',
+          style: TextStyle(fontSize: 16),
+        ),
+        SizedBox(height: 4),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              'Terms of Service',
+              style: TextStyle(decoration: TextDecoration.underline),
+            ),
+            Text(
+              'Privacy Policy',
+              style: TextStyle(decoration: TextDecoration.underline),
+            ),
+            Text(
+              'Content Policies',
+              style: TextStyle(decoration: TextDecoration.underline),
+            ),
+          ],
+        ),
+        SizedBox(height: 28),
+      ],
     );
   }
 }

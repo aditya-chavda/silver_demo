@@ -35,7 +35,8 @@ class _ChatScreenState extends State<ChatScreen> {
     );
     return Scaffold(
       appBar: AppBar(
-        surfaceTintColor: Colors.blue,
+        surfaceTintColor: Colors.orange,
+        backgroundColor: Colors.white,
         title: const ChatTitle(),
       ),
       body: SafeArea(
@@ -82,7 +83,7 @@ class _ChatScreenState extends State<ChatScreen> {
     // Note, this will listen to only immediate scroll events.
     if (notification.depth == 0) {
       if (notification.metrics.extentBefore == 0) {
-        _loadBefore(-40);
+        _loadBefore(-50);
       }
 
       if (notification.metrics.extentAfter == 0) {

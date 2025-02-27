@@ -16,18 +16,20 @@ class LabelledDivider extends StatelessWidget {
       padding: margin,
       child: Row(
         children: [
-          const Expanded(child: Divider()),
+          Expanded(child: Divider(color: Colors.grey.shade300)),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 22),
+            padding: const EdgeInsets.symmetric(horizontal: 18),
             child: Text(
               text,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 18,
-                fontWeight: FontWeight.w500,
+                letterSpacing: 0,
+                fontWeight: FontWeight.w600,
+                color: Colors.grey.shade600,
               ),
             ),
           ),
-          const Expanded(child: Divider()),
+          Expanded(child: Divider(color: Colors.grey.shade300)),
         ],
       ),
     );

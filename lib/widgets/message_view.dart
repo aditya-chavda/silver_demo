@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MessageView extends StatelessWidget {
@@ -32,7 +33,9 @@ class MessageView extends StatelessWidget {
                 vertical: 8,
               ),
               decoration: BoxDecoration(
-                color: isSender ? Colors.blue : Colors.grey.shade200,
+                color: isSender
+                    ? CupertinoColors.systemOrange.darkColor
+                    : Colors.grey.shade200,
                 borderRadius: const BorderRadius.all(
                   Radius.circular(28),
                 ),

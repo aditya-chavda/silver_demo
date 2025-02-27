@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
                   Radius.circular(16),
                 ),
               ),
-              backgroundColor: Colors.redAccent,
+              backgroundColor: Colors.deepOrangeAccent,
               foregroundColor: Colors.white,
               minimumSize: const Size(160, 50),
             ),

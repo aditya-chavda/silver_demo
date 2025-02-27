@@ -46,7 +46,7 @@ class RenderSliverMyStickyTitle extends RenderSliverSingleBoxAdapter {
 
     // Get the overlap offset we stored in geometry
     final double overlapOffset = constraints.overlap +
-        (constraints.scrollOffset).clamp(0, child!.size.height + 18);
+        (constraints.scrollOffset).clamp(0, child!.size.height + 42);
 
     // Create a clip rect to ensure we don't paint outside our bounds
     context.pushClipRect(

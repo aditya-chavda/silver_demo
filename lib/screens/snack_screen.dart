@@ -17,14 +17,15 @@ class SnackScreen extends StatelessWidget {
         slivers: [
           SliverAppBar(
             pinned: true,
-            expandedHeight: 280,
+            expandedHeight: 248,
             automaticallyImplyLeading: false,
             backgroundColor: CupertinoColors.systemOrange.darkColor,
+            surfaceTintColor: CupertinoColors.systemOrange.darkColor,
             flexibleSpace: const FlexibleSpaceBar(
               background: SnackProfile(),
             ),
             bottom: const PreferredSize(
-              preferredSize: Size(double.infinity, 120),
+              preferredSize: Size(double.infinity, 100),
               child: SnackHeader(),
             ),
           ),
@@ -57,7 +58,7 @@ class CategoryGrid extends StatelessWidget {
           SliverMyStickyTitle(
             child: Container(
               color: Colors.white,
-              padding: const EdgeInsets.symmetric(vertical: 8),
+              padding: const EdgeInsets.only(top: 6, bottom: 2),
               child: Text(
                 category.name,
                 style: const TextStyle(
@@ -68,7 +69,7 @@ class CategoryGrid extends StatelessWidget {
               ),
             ),
           ),
-          const SliverToBoxAdapter(child: SizedBox(height: 14)),
+          const SliverToBoxAdapter(child: SizedBox(height: 10)),
           SliverGrid(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 4,

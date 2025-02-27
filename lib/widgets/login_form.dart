@@ -17,18 +17,36 @@ class LoginForm extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Row(
+          Row(
             children: [
               ShadowContainer(
+                padding: const EdgeInsets.fromLTRB(12, 8, 0, 8),
                 child: Row(
                   children: [
-                    Icon(Icons.flag),
-                    Icon(Icons.arrow_drop_down_sharp),
+                    Container(
+                      width: 32,
+                      height: 22,
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(6)),
+                        image: DecorationImage(
+                          image: NetworkImage(
+                            'https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_640.png',
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    const Icon(
+                      Icons.arrow_drop_down_sharp,
+                      color: Colors.grey,
+                      size: 42,
+                    ),
                   ],
                 ),
               ),
-              SizedBox(width: 22),
-              ShadowContainer(
+              const SizedBox(width: 22),
+              const ShadowContainer(
+                padding: EdgeInsets.all(16),
                 child: Row(
                   children: [
                     Text(
@@ -40,7 +58,7 @@ class LoginForm extends StatelessWidget {
                     ),
                     SizedBox(width: 12),
                     SizedBox(
-                      width: 210,
+                      width: 180,
                       child: TextField(
                         decoration: InputDecoration.collapsed(
                           hintText: 'Enter Mobile Number',
@@ -71,22 +89,29 @@ class LoginForm extends StatelessWidget {
             ),
           ),
           const LabelledDivider(text: 'or'),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               ShadowContainer(
-                child: Icon(
-                  Icons.more_horiz_rounded,
-                  size: 32,
+                child: Image.network(
+                  'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/2048px-Google_%22G%22_logo.svg.png',
+                  width: 32,
+                  height: 32,
                 ),
               ),
               ShadowContainer(
-                child: Icon(
-                  Icons.more_horiz_rounded,
-                  size: 32,
+                padding: const EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 4,
+                ),
+                child: Image.network(
+                  'https://i.pinimg.com/736x/24/13/3a/24133a0cfbc054db31c9ac97c64ea727.jpg',
+                  fit: BoxFit.cover,
+                  width: 52,
+                  height: 32,
                 ),
               ),
-              ShadowContainer(
+              const ShadowContainer(
                 child: Icon(
                   Icons.more_horiz_rounded,
                   size: 32,

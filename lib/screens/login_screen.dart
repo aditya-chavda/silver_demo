@@ -9,12 +9,12 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: CustomScrollView(
         slivers: [
-          const SliverAppBar(
+          SliverAppBar(
             titleSpacing: 0,
-            expandedHeight: 320,
+            expandedHeight: 300,
             backgroundColor: Colors.white,
             flexibleSpace: FlexibleSpaceBar(
               background: DecoratedBox(
@@ -23,7 +23,7 @@ class LoginScreen extends StatelessWidget {
                     bottom: Radius.circular(100),
                   ),
                   image: DecorationImage(
-                    image: AssetImage('assets/splash.png'),
+                    image: AssetImage('assets/splash.jpg'),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -31,25 +31,28 @@ class LoginScreen extends StatelessWidget {
             ),
           ),
           SliverPadding(
-            padding: const EdgeInsets.all(16),
-            sliver: SliverList.list(
-              children: const [
-                SizedBox(height: 32),
-                Text(
-                  'India\'s #1 Food Delivery and Dining App',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    height: 1.2,
-                    fontSize: 32,
-                    fontWeight: FontWeight.w600,
+            padding: EdgeInsets.all(16),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate.fixed(
+                [
+                  SizedBox(height: 24),
+                  Text(
+                    'India\'s #1 Food Delivery \nand Dining App',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 28,
+                      height: 1.2,
+                      letterSpacing: 0,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
-                LabelledDivider(text: 'Login in or sign up'),
-                LoginForm(),
-              ],
+                  LabelledDivider(text: 'Log in or sign up'),
+                  LoginForm(),
+                ],
+              ),
             ),
           ),
-          const SliverFillRemaining(
+          SliverFillRemaining(
             hasScrollBody: false,
             fillOverscroll: true,
             child: PrivacyFooter(),
