@@ -9,7 +9,7 @@ class SnackProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 64, 16, 0),
+      padding: const EdgeInsets.fromLTRB(16, 46, 16, 0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

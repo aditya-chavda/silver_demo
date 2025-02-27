@@ -1,4 +1,24 @@
+import 'package:flutter/material.dart';
+
 import 'models/category.dart';
+
+const categoryTitleData = [
+  'All',
+  'Electronics',
+  'Premium',
+  'Kids',
+  'Gifting',
+  'Beauty',
+];
+
+const categoryIconData = [
+  Icons.shopping_basket_outlined,
+  Icons.headphones_outlined,
+  Icons.diamond_outlined,
+  Icons.child_friendly_outlined,
+  Icons.wallet_giftcard_outlined,
+  Icons.brush_outlined,
+];
 
 const chatData = [
   {
@@ -219,31 +239,46 @@ const homeData = [
     name: "Grocery & Kitchen",
     subcategories: [
       SubcategoryDm(
-          name: "Vegetables & Fruits",
-          imageUrl: "https://example.com/fresh-fruits.jpg"),
+        name: "Vegetables & Fruits",
+        imageUrl:
+            "https://cdn.grofers.com/app/images/collections/asset_Vegetables_&_Fruits_Fabicon_1724952276736",
+      ),
       SubcategoryDm(
-          name: "Atta, Rice & Dal",
-          imageUrl: "https://example.com/fresh-vegetables.jpg"),
+        name: "Atta, Rice & Dal",
+        imageUrl:
+            "https://cdn.grofers.com/app/images/collections/asset_atta,_rice_&_dal_1701251225824",
+      ),
       SubcategoryDm(
-          name: "Oil, Ghee & Masala",
-          imageUrl: "https://example.com/exotic-fruits.jpg"),
+        name: "Oil, Ghee & Masala",
+        imageUrl:
+            "https://cdn.grofers.com/app/images/collections/asset_Oil,ghee&masala_1706701916836",
+      ),
       SubcategoryDm(
-          name: "Dairy, Bread & Eggs",
-          imageUrl: "https://example.com/exotic-vegetables.jpg"),
+        name: "Dairy, Bread & Eggs",
+        imageUrl:
+            "https://cdn.grofers.com/app/images/collections/asset_Dairy_&_bread_&_eggs_1716274960281",
+      ),
       SubcategoryDm(
-          name: "Bakery & Biscuits",
-          imageUrl: "https://example.com/organic-fruits.jpg"),
+        name: "Bakery & Biscuits",
+        imageUrl:
+            "https://cdn.grofers.com/app/images/collections/asset_Bakery_&_Biscuits_1708337109248",
+      ),
       SubcategoryDm(
-          name: "Dry Fruits & Cereals",
-          imageUrl: "https://example.com/organic-vegetables.jpg"),
+        name: "Dry Fruits & Cereals",
+        imageUrl:
+            "https://cdn.grofers.com/app/images/collections/asset_Dry_fruits_&_Cereals_Fabicon_1727547639034",
+      ),
       SubcategoryDm(
-          name: "Kitchenware & Appliances",
-          imageUrl: "https://example"
-              ".com/cut-peeled"
-              ".jpg"),
+        name: "Kitchenware & Appliances",
+        imageUrl:
+            "https://cdn.grofers.com/app/images/collections/asset_Kitchen_Utensils_&_1701253042884",
+      ),
       SubcategoryDm(
-          name: "Herbs & Seasoning",
-          imageUrl: "https://example.com/herbs-seasoning.jpg"),
+        name: "Sauces & Spreads",
+        // name: "Herbs & Seasoning",
+        imageUrl:
+            "https://cdn.grofers.com/app/images/collections/asset_sauces_&_spreads_(1)_1708404292298",
+      ),
     ],
   ),
   CategoryDm(
@@ -251,28 +286,47 @@ const homeData = [
     name: "Snacks & Drinks",
     subcategories: [
       SubcategoryDm(
-          name: "Chips & Namkeen", imageUrl: "https://example.com/chips.jpg"),
+        name: "Chips & Namkeen",
+        imageUrl:
+            "https://cdn.grofers.com/app/images/collections/asset_Chips_&_namkeen_1701251290984",
+        // "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=450/app/images/category/cms_images/icon/1237_1670927167688.png",
+      ),
       SubcategoryDm(
-          name: "Biscuits & Cookies",
-          imageUrl: "https://example.com/biscuits.jpg"),
+        name: "Fresheners & Paan Corner",
+        imageUrl:
+            "https://cdn.grofers.com/app/images/collections/asset_paan_corner_1701251755370",
+      ),
       SubcategoryDm(
-          name: "Chocolates & Sweets",
-          imageUrl: "https://example.com/chocolates.jpg"),
+        name: "Chocolates & Sweets",
+        imageUrl:
+            "https://cdn.grofers.com/app/images/collections/asset_Sweets_&_chocolates_1701251350378",
+        // "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=450/app/images/category/cms_images/icon/9_1693202755712.png",
+      ),
       SubcategoryDm(
-          name: "Drinks & Juices", imageUrl: "https://example.com/juices.jpg"),
+        name: "Drinks & Juices",
+        imageUrl:
+            "https://cdn.grofers.com/app/images/collections/asset_Drinks_&_Juices_copy_Fab_(1)_1718880190832",
+      ),
       SubcategoryDm(
-          name: "Tea, Coffee & Milk Drinks",
-          imageUrl: "https://example"
-              ".com/tea-coffee.jpg"),
+        name: "Tea, Coffee & Milk Drinks",
+        imageUrl:
+            "https://cdn.grofers.com/app/images/collections/asset_Tea,_Coffee_&_Health_Dr_1701251649048",
+      ),
       SubcategoryDm(
-          name: "Ice creams & More",
-          imageUrl: "https://example.com/energy-drinks.jpg"),
+        name: "Ice creams & More",
+        imageUrl:
+            "https://cdn.grofers.com/app/images/collections/asset_Ice_cream_1708404331603",
+      ),
       SubcategoryDm(
-          name: "Instant Food & Soups",
-          imageUrl: "https://example.com/noodles.jpg"),
+        name: "Instant Food & Soups",
+        imageUrl:
+            "https://cdn.grofers.com/app/images/collections/asset_Instant_&_Frozen_Food_1708339476070",
+      ),
       SubcategoryDm(
-          name: "Dry Fruits & Nuts",
-          imageUrl: "https://example.com/dry-fruits.jpg"),
+        name: "Pharma & Wellness",
+        imageUrl:
+            "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=450/app/images/category/cms_images/icon/287_1684822344371.png",
+      ),
     ],
   ),
   CategoryDm(
@@ -280,50 +334,92 @@ const homeData = [
     name: "Household Essentials",
     subcategories: [
       SubcategoryDm(
-          name: "Detergents & Dishwash",
-          imageUrl: "https://example.com/detergents.jpg"),
+        name: "Bath & Bodywash",
+        imageUrl:
+            "https://cdn.grofers.com/app/images/collections/asset_Bath_&_Body_(1)_1708404847656",
+      ),
       SubcategoryDm(
-          name: "Room & Car Fresheners",
-          imageUrl: "https://example.com/cleaning-supplies.jpg"),
+        name: "Pet Food & Toys",
+        imageUrl:
+            "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=450/app/images/category/cms_images/icon/5_1686741293107.png",
+      ),
       SubcategoryDm(
-          name: "Paper & Disposables",
-          imageUrl: "https://example.com/paper.jpg"),
+        name: "Home & Office",
+        imageUrl:
+            "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=450/app/images/category/cms_images/icon/1379_1670927201924.png",
+      ),
       SubcategoryDm(
-          name: "Cleaners & Repellents",
-          imageUrl: "https://example.com/air-fresheners.jpg"),
+        name: "Cleaners & Repellents",
+        imageUrl:
+            "https://cdn.grofers.com/app/images/collections/asset_Cleaning_&_repellants-3_1711101861022",
+      ),
       SubcategoryDm(
-          name: "Stationery & Games",
-          imageUrl: "https://example.com/storage"
-              ".jpg"),
+        name: "Stationery & Games",
+        imageUrl:
+            "https://cdn.grofers.com/app/images/collections/asset_Stationery_&_Games_(1)_1708407891607",
+      ),
       SubcategoryDm(
-          name: "Home & Lifestyle", imageUrl: "https://example.com/pooja.jpg"),
+        name: "Home & Lifestyle",
+        imageUrl:
+            "https://cdn.grofers.com/app/images/collections/asset_Home_&_Lifestyle_(5)_1710413986612",
+      ),
       SubcategoryDm(
-          name: "Batteries & Electricals",
-          imageUrl: "https://example.com/batteries.jpg"),
+        name: "Batteries & Electricals",
+        imageUrl:
+            "https://cdn.grofers.com/app/images/collections/asset_Electronics_(1)_1708404702104",
+      ),
       SubcategoryDm(
-          name: "Kitchen Essentials",
-          imageUrl: "https://example.com/kitchen.jpg"),
+        name: "Fashion & Accessories",
+        imageUrl:
+            "https://cdn.grofers.com/app/images/category/cms_images/488a424a-82dc-4bb1-9100-669a7a6552bb.",
+      ),
     ],
   ),
   CategoryDm(
     id: "102",
-    name: "Dairy & Milk",
+    name: "Care & Wellness",
     subcategories: [
-      SubcategoryDm(name: "Milk", imageUrl: "https://example.com/milk.jpg"),
-      SubcategoryDm(name: "Cheese", imageUrl: "https://example.com/cheese.jpg"),
-      SubcategoryDm(name: "Butter", imageUrl: "https://example.com/butter.jpg"),
       SubcategoryDm(
-          name: "Yogurt & Curd", imageUrl: "https://example.com/yogurt.jpg"),
+        name: "Baby Care",
+        imageUrl:
+            "https://cdn.grofers.com/app/images/collections/asset_Baby_care_(1)_1708404895187",
+      ),
       SubcategoryDm(
-          name: "Paneer & Soya Chunks",
-          imageUrl: "https://example.com/paneer"
-              ".jpg"),
+        name: "Skin & Face",
+        imageUrl:
+            "https://cdn.grofers.com/app/images/collections/asset_L0_icons_1710420132949",
+      ),
       SubcategoryDm(
-          name: "Breads & Buns", imageUrl: "https://example.com/bread.jpg"),
+        name: "Personal Care",
+        imageUrl:
+            "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=450/app/images/category/cms_images/icon/163_1698986628342.png",
+      ),
       SubcategoryDm(
-          name: "Cakes & Pastries", imageUrl: "https://example.com/cakes.jpg"),
+        name: "Hair",
+        imageUrl:
+            "https://cdn.grofers.com/app/images/collections/asset_Hair_(1)_1708404557394",
+      ),
       SubcategoryDm(
-          name: "Cookies & Rusk", imageUrl: "https://example.com/cookies.jpg"),
+        name: "Organic & Premium",
+        imageUrl:
+            "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=450/app/images/category/cms_images/icon/175_1670926891460.png",
+        // "https://cdn.grofers.com/app/images/collections/asset_Sexual_wellness_(1)_1708404220004",
+      ),
+      SubcategoryDm(
+        name: "Beauty & Cosmetics",
+        imageUrl:
+            "https://cdn.grofers.com/app/images/collections/asset_Beauty_&_cosmetics_1_1714732458108",
+      ),
+      SubcategoryDm(
+        name: "Feminine Hygiene",
+        imageUrl:
+            "https://cdn.grofers.com/app/images/collections/asset_Feminine_hygiene_(1)_1708404632043",
+      ),
+      SubcategoryDm(
+        name: "Health & Pharma",
+        imageUrl:
+            "https://cdn.grofers.com/app/images/collections/asset_Health_&_pharma_1701253223638",
+      ),
     ],
   ),
 ];

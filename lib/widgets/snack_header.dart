@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import '../static_data.dart';
+
 class SnackHeader extends StatelessWidget {
   const SnackHeader({super.key});
 
@@ -45,23 +47,32 @@ class SnackHeader extends StatelessWidget {
           SizedBox(
             height: 64,
             child: ListView.separated(
-              itemCount: 8,
+              padding: const EdgeInsets.only(left: 8),
+              itemCount: categoryTitleData.length,
               clipBehavior: Clip.none,
               scrollDirection: Axis.horizontal,
-              separatorBuilder: (_, __) => const SizedBox(width: 32),
-              itemBuilder: (_, __) => const Column(
-                children: [
-                  Icon(Icons.headphones_outlined, color: Colors.white),
-                  SizedBox(height: 8),
-                  Text(
-                    'Electronics',
-                    style: TextStyle(
+              separatorBuilder: (_, __) => const SizedBox(width: 42),
+              itemBuilder: (_, index) {
+                final title = categoryTitleData[index];
+                final icon = categoryIconData[index];
+                return Column(
+                  children: [
+                    Icon(
+                      icon,
+                      size: 28,
                       color: Colors.white,
-                      fontWeight: FontWeight.w800,
                     ),
-                  ),
-                ],
-              ),
+                    const SizedBox(height: 4),
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
           ),
         ],

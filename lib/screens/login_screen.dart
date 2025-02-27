@@ -13,7 +13,6 @@ class LoginScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            titleSpacing: 0,
             expandedHeight: 300,
             backgroundColor: Colors.white,
             flexibleSpace: FlexibleSpaceBar(

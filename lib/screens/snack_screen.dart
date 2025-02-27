@@ -17,7 +17,7 @@ class SnackScreen extends StatelessWidget {
         slivers: [
           SliverAppBar(
             pinned: true,
-            expandedHeight: 248,
+            expandedHeight: 236,
             automaticallyImplyLeading: false,
             backgroundColor: CupertinoColors.systemOrange.darkColor,
             surfaceTintColor: CupertinoColors.systemOrange.darkColor,
@@ -94,10 +94,7 @@ class CategoryGrid extends StatelessWidget {
                           color: CupertinoColors.extraLightBackgroundGray,
                           borderRadius: BorderRadius.all(Radius.circular(22)),
                         ),
-                        // child: Image.network(data.imageUrl),
-                        child: Image.network(
-                          'https://m.media-amazon.com/images/I/61iL96yYQsL.jpg',
-                        ),
+                        child: Image.network(data.imageUrl),
                       ),
                     ),
                     const SizedBox(height: 4),
