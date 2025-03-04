@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../models/category.dart';
 import '../static_data.dart';
-import '../widgets/sliver_my_sticky_title.dart';
 import '../widgets/snack_header.dart';
 import '../widgets/snack_profile.dart';
 
@@ -55,19 +54,9 @@ class CategoryGrid extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
       sliver: SliverMainAxisGroup(
         slivers: [
-          SliverMyStickyTitle(
-            child: Container(
-              color: Colors.white,
-              padding: const EdgeInsets.only(top: 6, bottom: 2),
-              child: Text(
-                category.name,
-                style: const TextStyle(
-                  fontSize: 22,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
+          SliverPersistentHeader(
+            pinned: true,
+            delegate: MyHeader(category.name),
           ),
           const SliverToBoxAdapter(child: SizedBox(height: 10)),
           SliverGrid(
@@ -113,6 +102,60 @@ class CategoryGrid extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class MyHeader extends SliverPersistentHeaderDelegate {
+  const MyHeader(this.name);
+
+  final String name;
+
+  static const double _size = 39;
+
+  @override
+  double get maxExtent => _size;
+
+  @override
+  double get minExtent => _size;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    return false;
+  }
+
+  @override
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 6, bottom: 2),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Container(
+          decoration: shrinkOffset <= 0
+              ? null
+              : const BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 20,
+                      offset: Offset(0, 16),
+                    ),
+                  ],
+                ),
+          child: Text(
+            name,
+            style: const TextStyle(
+              fontSize: 22,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
       ),
     );
   }

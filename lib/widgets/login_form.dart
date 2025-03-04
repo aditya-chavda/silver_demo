@@ -60,6 +60,7 @@ class LoginForm extends StatelessWidget {
                     SizedBox(
                       width: 180,
                       child: TextField(
+                        keyboardType: TextInputType.numberWithOptions(),
                         decoration: InputDecoration.collapsed(
                           hintText: 'Enter Mobile Number',
                           hintStyle: TextStyle(
