@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -23,18 +21,20 @@ class RenderSliverMyStickyTitle extends RenderSliverSingleBoxAdapter {
 
     child!.layout(constraints.asBoxConstraints(), parentUsesSize: true);
 
-    final double childExtent;
-    switch (constraints.axis) {
-      case Axis.horizontal:
-        childExtent = child!.size.width;
-      case Axis.vertical:
-        childExtent = child!.size.height;
-    }
+    final double childExtent = switch (constraints.axis) {
+      Axis.horizontal => child!.size.width,
+      Axis.vertical => child!.size.height,
+    };
+    final double paintedChildSize = calculatePaintOffset(
+      constraints,
+      from: 0,
+      to: constraints.remainingPaintExtent,
+    );
 
     geometry = SliverGeometry(
       scrollExtent: childExtent,
-      paintExtent: min(constraints.remainingPaintExtent, childExtent),
-      maxPaintExtent: childExtent,
+      paintExtent: paintedChildSize.clamp(0, childExtent),
+      maxPaintExtent: paintedChildSize,
     );
 
     setChildParentData(child!, constraints, geometry!);
@@ -45,24 +45,11 @@ class RenderSliverMyStickyTitle extends RenderSliverSingleBoxAdapter {
     if (child == null || geometry!.paintExtent == 0.0) return;
 
     // Get the overlap offset we stored in geometry
-    final double overlapOffset = constraints.overlap +
-        (constraints.scrollOffset).clamp(0, child!.size.height + 42);
-
-    // Create a clip rect to ensure we don't paint outside our bounds
-    context.pushClipRect(
-      needsCompositing,
-      offset,
-      Offset.zero & Size(constraints.crossAxisExtent, geometry!.paintExtent),
-      (context, offset) {
-        // Apply the overlap transformation
-        context.pushTransform(
-          needsCompositing,
-          offset,
-          Matrix4.translationValues(0, overlapOffset, 0),
-          super.paint,
-        );
-      },
-      clipBehavior: Clip.none,
+    final double overlapOffset = constraints.overlap.clamp(
+      0,
+      geometry!.maxPaintExtent,
     );
+
+    context.paintChild(child!, offset + Offset(0, overlapOffset));
   }
 }
