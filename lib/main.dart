@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
       },
       child: MaterialApp(
         title: 'Slivers Demo',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           useMaterial3: true,
           scaffoldBackgroundColor: Colors.white,

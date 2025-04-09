@@ -2,9 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../models/category.dart';
-import '../static_data.dart';
-import '../widgets/snack_header.dart';
-import '../widgets/snack_profile.dart';
+import '../widgets/section_title.dart';
+import 'chat_screen.dart';
 
 class SnackScreen extends StatelessWidget {
   const SnackScreen({super.key});
@@ -12,35 +11,33 @@ class SnackScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => const ChatScreen(),
+          ),
+        ),
+        child: const Icon(
+          Icons.support_agent_outlined,
+          size: 42,
+        ),
+      ),
+      body: const CustomScrollView(
         slivers: [
-          SliverAppBar(
-            pinned: true,
-            expandedHeight: 236,
-            automaticallyImplyLeading: false,
-            backgroundColor: CupertinoColors.systemOrange.darkColor,
-            surfaceTintColor: CupertinoColors.systemOrange.darkColor,
-            flexibleSpace: const FlexibleSpaceBar(
-              background: SnackProfile(),
-            ),
-            bottom: const PreferredSize(
-              preferredSize: Size(double.infinity, 100),
-              child: SnackHeader(),
-            ),
-          ),
-          ...List.generate(
-            homeData.length,
-            (index) => CategoryGrid(category: homeData[index]),
-          ),
-          const SliverToBoxAdapter(child: SizedBox(height: 22)),
+          SliverAppBar(),
+          // ...List.generate(
+          //   homeData.length,
+          //   (index) => CategorySectionGrid(category: homeData[index]),
+          // ),
+          SliverToBoxAdapter(child: SizedBox(height: 22)),
         ],
       ),
     );
   }
 }
 
-class CategoryGrid extends StatelessWidget {
-  const CategoryGrid({
+class CategorySectionGrid extends StatelessWidget {
+  const CategorySectionGrid({
     required this.category,
     super.key,
   });
@@ -50,16 +47,17 @@ class CategoryGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final subcategories = category.subcategories;
-    return SliverPadding(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-      sliver: SliverMainAxisGroup(
-        slivers: [
-          SliverPersistentHeader(
-            pinned: true,
-            delegate: MyHeader(category.name),
-          ),
-          const SliverToBoxAdapter(child: SizedBox(height: 10)),
-          SliverGrid(
+    return SliverMainAxisGroup(
+      slivers: [
+        // Issue: https://github.com/flutter/flutter/issues/134535
+        SliverPersistentHeader(
+          pinned: true,
+          delegate: MyHeader(category.name),
+        ),
+        const SliverToBoxAdapter(child: SizedBox(height: 10)),
+        SliverPadding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+          sliver: SliverGrid(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 4,
               mainAxisSpacing: 16,
@@ -70,39 +68,12 @@ class CategoryGrid extends StatelessWidget {
               childCount: subcategories.length,
               (_, index) {
                 final data = subcategories[index];
-                return Column(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 6,
-                          horizontal: 8,
-                        ),
-                        decoration: const BoxDecoration(
-                          color: CupertinoColors.extraLightBackgroundGray,
-                          borderRadius: BorderRadius.all(Radius.circular(22)),
-                        ),
-                        child: Image.network(data.imageUrl),
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      data.name,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        height: 1.4,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
-                  ],
-                );
+                return _getGridItems(data);
               },
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -112,7 +83,7 @@ class MyHeader extends SliverPersistentHeaderDelegate {
 
   final String name;
 
-  static const double _size = 39;
+  static const double _size = 49;
 
   @override
   double get maxExtent => _size;
@@ -121,9 +92,7 @@ class MyHeader extends SliverPersistentHeaderDelegate {
   double get minExtent => _size;
 
   @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return false;
-  }
+  bool shouldRebuild(MyHeader oldDelegate) => oldDelegate.name != name;
 
   @override
   Widget build(
@@ -131,32 +100,39 @@ class MyHeader extends SliverPersistentHeaderDelegate {
     double shrinkOffset,
     bool overlapsContent,
   ) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 6, bottom: 2),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Container(
-          decoration: shrinkOffset <= 0
-              ? null
-              : const BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black26,
-                      blurRadius: 20,
-                      offset: Offset(0, 16),
-                    ),
-                  ],
-                ),
-          child: Text(
-            name,
-            style: const TextStyle(
-              fontSize: 22,
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ),
+    return SectionTitle(
+      name: name,
     );
   }
+}
+
+Widget _getGridItems(SubcategoryDm data) {
+  return Column(
+    children: [
+      Expanded(
+        child: Container(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(
+            vertical: 6,
+            horizontal: 8,
+          ),
+          decoration: const BoxDecoration(
+            color: CupertinoColors.extraLightBackgroundGray,
+            borderRadius: BorderRadius.all(Radius.circular(22)),
+          ),
+          child: Image.network(data.imageUrl),
+        ),
+      ),
+      const SizedBox(height: 4),
+      Text(
+        data.name,
+        textAlign: TextAlign.center,
+        style: const TextStyle(
+          fontSize: 12,
+          height: 1.4,
+          fontWeight: FontWeight.bold,
+        ),
+      )
+    ],
+  );
 }

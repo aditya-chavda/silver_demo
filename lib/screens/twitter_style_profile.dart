@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-import '../extensions.dart';
 import '../models/post.dart';
 import '../widgets/circle_icon.dart';
 import '../widgets/my_flexible_space_bar.dart';
-import '../widgets/post_footer_icon.dart';
+import '../widgets/twitter_post_tile.dart';
 import '../widgets/twitter_profile_header.dart';
 import '../widgets/twitter_profile_title.dart';
 import 'chat_screen.dart';
@@ -33,12 +33,9 @@ class _TwitterStyleProfileState extends State<TwitterStyleProfile>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: NestedScrollView(
+      body: CustomScrollView(
         controller: _scrollController,
-        physics: const BouncingScrollPhysics(
-          parent: AlwaysScrollableScrollPhysics(),
-        ),
-        headerSliverBuilder: (context, __) => [
+        slivers: [
           SliverAppBar(
             pinned: true,
             stretch: true,
@@ -68,6 +65,9 @@ class _TwitterStyleProfileState extends State<TwitterStyleProfile>
               ),
             ),
             actions: _getActions(context),
+            systemOverlayStyle: const SystemUiOverlayStyle(
+              statusBarBrightness: Brightness.dark,
+            ),
           ),
           SliverPadding(
             padding: const EdgeInsets.all(16),
@@ -75,18 +75,17 @@ class _TwitterStyleProfileState extends State<TwitterStyleProfile>
               child: TwitterProfileHeader(name: widget.username),
             ),
           ),
-          SliverOverlapAbsorber(
-            handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-            sliver: SliverPersistentHeader(
-              pinned: true,
-              delegate: TabBarHeader(tabController),
+          SliverPersistentHeader(
+            pinned: true,
+            delegate: TabBarHeader(tabController),
+          ),
+          SliverFillRemaining(
+            child: TabBarView(
+              controller: tabController,
+              children: _getTabsContent(),
             ),
           ),
         ],
-        body: TabBarView(
-          controller: tabController,
-          children: _getTabsContent(),
-        ),
       ),
     );
   }
@@ -98,19 +97,6 @@ class _TwitterStyleProfileState extends State<TwitterStyleProfile>
   }
 
   List<Widget> _getTabsContent() {
-    //return [
-    //   OverflowBar(
-    //     children: List.generate(
-    //       20,
-    //           (index) => ListTile(
-    //         title: Text('Content Item ${index + 1}'),
-    //       ),
-    //     ),
-    //   ),
-    //   const Placeholder(),
-    //   const Placeholder(),
-    //   const Placeholder(),
-    // ]
     return List.generate(
       4,
       (index) {
@@ -118,13 +104,8 @@ class _TwitterStyleProfileState extends State<TwitterStyleProfile>
           top: false,
           bottom: false,
           child: Builder(
-            builder: (BuildContext context) => CustomScrollView(
+            builder: (context) => CustomScrollView(
               slivers: <Widget>[
-                SliverOverlapInjector(
-                  handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
-                    context,
-                  ),
-                ),
                 SectionPost(
                   title: 'Trending',
                   posts: _getTrendingPosts(),
@@ -246,106 +227,7 @@ class SectionPost extends StatelessWidget {
             ),
             itemBuilder: (_, index) {
               final post = posts[index];
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 6),
-                    child: CircleAvatar(
-                      radius: 28,
-                      backgroundImage: post.authorPic.isEmpty
-                          ? null
-                          : NetworkImage(post.authorPic),
-                      child: post.authorPic.isEmpty
-                          ? const Icon(Icons.person, size: 28)
-                          : null,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              post.authorName,
-                              style: const TextStyle(
-                                fontSize: 18,
-                                letterSpacing: 0,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              '${post.authorUsername} • ${post.postedAt.format()}',
-                              style: TextStyle(
-                                fontSize: 16,
-                                letterSpacing: 0,
-                                color: Colors.grey.shade600,
-                              ),
-                            ),
-                            const Expanded(
-                              child: Align(
-                                alignment: Alignment.centerRight,
-                                child: Icon(
-                                  Icons.more_horiz_rounded,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Text(
-                          post.content,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            letterSpacing: 0,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        if (post.imageUrl.isNotEmpty)
-                          Container(
-                            width: double.maxFinite,
-                            height: 220,
-                            decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(16),
-                              ),
-                              border: Border.all(color: Colors.grey),
-                              image: DecorationImage(
-                                image: NetworkImage(post.imageUrl),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        const SizedBox(height: 8),
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            PostFooterIcon(
-                              icon: Icons.chat_bubble_outline_rounded,
-                            ),
-                            PostFooterIcon(icon: Icons.autorenew_rounded),
-                            PostFooterIcon(
-                              icon: Icons.favorite_border_rounded,
-                            ),
-                            PostFooterIcon(icon: Icons.bar_chart_outlined),
-                            PostFooterIcon(
-                              icon: Icons.bookmark_border_rounded,
-                              quantized: false,
-                            ),
-                            PostFooterIcon(
-                              icon: Icons.file_upload_outlined,
-                              quantized: false,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              );
+              return TwitterPostTile(post: post);
             },
           ),
         ],

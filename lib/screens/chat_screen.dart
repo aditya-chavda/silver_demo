@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:sliver_demo/widgets/chat_title.dart';
 
 import '../static_data.dart';
+import '../widgets/chat_title.dart';
 import '../widgets/message_view.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -47,14 +47,6 @@ class _ChatScreenState extends State<ChatScreen> {
             controller: scrollController,
             center: _todayKey,
             slivers: [
-              // ParallaxSliver(
-              //   parallaxFactor: 0.8,
-              //   child: Image.network(
-              //     'https://www.dictionary.com/e/wp-content/uploads/2019/09/1000x700_peek_pique_peak-790x310.jpg',
-              //     height: 300,
-              //     fit: BoxFit.cover,
-              //   ),
-              // ),
               if (isLoading == 'before')
                 loader
               else if (pastData.isNotEmpty)

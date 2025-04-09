@@ -4,8 +4,8 @@ import '../widgets/labelled_divider.dart';
 import '../widgets/login_form.dart';
 import '../widgets/privacy_footer.dart';
 
-class SliverLoginScreen extends StatelessWidget {
-  const SliverLoginScreen({super.key});
+class SliverLoginScreenBackup extends StatelessWidget {
+  const SliverLoginScreenBackup({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class SliverLoginScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            expandedHeight: 250,
+            expandedHeight: 300,
             backgroundColor: Colors.white,
             flexibleSpace: FlexibleSpaceBar(
               background: DecoratedBox(

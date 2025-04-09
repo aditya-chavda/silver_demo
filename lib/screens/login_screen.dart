@@ -12,7 +12,8 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       body: LayoutBuilder(
         builder: (context, constraints) => SingleChildScrollView(
-          child: ConstrainedBox(
+          child: Container(
+            color: Colors.white,
             constraints: BoxConstraints(minHeight: constraints.maxHeight),
             child: const Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
