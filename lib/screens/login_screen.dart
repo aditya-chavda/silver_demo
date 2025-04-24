@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sliver_demo/static_data.dart';
 
 import '../widgets/labelled_divider.dart';
 import '../widgets/login_form.dart';
@@ -10,9 +11,12 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kBgColor,
+      resizeToAvoidBottomInset: false,
       body: LayoutBuilder(
         builder: (context, constraints) => SingleChildScrollView(
-          child: ConstrainedBox(
+          child: Container(
+            color: Colors.white,
             constraints: BoxConstraints(minHeight: constraints.maxHeight),
             child: const Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -47,6 +51,9 @@ class LoginScreen extends StatelessWidget {
                             ),
                           ),
                           LabelledDivider(text: 'Log in or sign up'),
+                          SizedBox(height: 100),
+                          LoginForm(),
+                          LoginForm(),
                           LoginForm(),
                         ],
                       ),

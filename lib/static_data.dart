@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'models/category.dart';
 
+const kBgColor = Color.fromRGBO(239, 206, 94, 1);
+
 const categoryTitleData = [
   'All',
   'Electronics',
