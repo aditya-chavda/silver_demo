@@ -17,63 +17,68 @@ class LoginForm extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            children: [
-              ShadowContainer(
-                padding: const EdgeInsets.fromLTRB(12, 8, 0, 8),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 32,
-                      height: 22,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(6)),
-                        image: DecorationImage(
-                          image: NetworkImage(
-                            'https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_640.png',
-                          ),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    const Icon(
-                      Icons.arrow_drop_down_sharp,
-                      color: Colors.grey,
-                      size: 42,
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 22),
-              const ShadowContainer(
-                padding: EdgeInsets.all(16),
-                child: Row(
-                  children: [
-                    Text(
-                      '+91',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    SizedBox(width: 12),
-                    SizedBox(
-                      width: 180,
-                      child: TextField(
-                        keyboardType: TextInputType.numberWithOptions(),
-                        decoration: InputDecoration.collapsed(
-                          hintText: 'Enter Mobile Number',
-                          hintStyle: TextStyle(
-                            fontSize: 16,
-                            height: 1.7,
+          SizedBox(
+            width: MediaQuery.sizeOf(context).width,
+            child: Row(
+              children: [
+                ShadowContainer(
+                  padding: const EdgeInsets.fromLTRB(12, 8, 0, 8),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 32,
+                        height: 22,
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(6)),
+                          image: DecorationImage(
+                            image: NetworkImage(
+                              'https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_640.png',
+                            ),
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                      const Icon(
+                        Icons.arrow_drop_down_sharp,
+                        color: Colors.grey,
+                        size: 42,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+                const SizedBox(width: 22),
+                const Expanded(
+                  child: ShadowContainer(
+                    padding: EdgeInsets.all(16),
+                    child: Row(
+                      children: [
+                        Text(
+                          '+91',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        SizedBox(width: 12),
+                        Expanded(
+                          child: TextField(
+                            // key: Key('email_field'),
+                            keyboardType: TextInputType.numberWithOptions(),
+                            decoration: InputDecoration.collapsed(
+                              hintText: 'Enter Mobile Number',
+                              hintStyle: TextStyle(
+                                fontSize: 16,
+                                height: 1.7,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
           const SizedBox(height: 16),
           ElevatedButton(

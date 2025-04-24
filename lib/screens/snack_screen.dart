@@ -2,7 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../models/category.dart';
+import '../static_data.dart';
 import '../widgets/section_title.dart';
+import '../widgets/sliver_my_sticky_title.dart';
+import '../widgets/snack_header.dart';
+import '../widgets/snack_profile.dart';
 import 'chat_screen.dart';
 
 class SnackScreen extends StatelessWidget {
@@ -22,14 +26,27 @@ class SnackScreen extends StatelessWidget {
           size: 42,
         ),
       ),
-      body: const CustomScrollView(
+      body: CustomScrollView(
         slivers: [
-          SliverAppBar(),
-          // ...List.generate(
-          //   homeData.length,
-          //   (index) => CategorySectionGrid(category: homeData[index]),
-          // ),
-          SliverToBoxAdapter(child: SizedBox(height: 22)),
+          SliverAppBar(
+            pinned: true,
+            expandedHeight: 236,
+            automaticallyImplyLeading: false,
+            backgroundColor: CupertinoColors.systemOrange.darkColor,
+            surfaceTintColor: CupertinoColors.systemOrange.darkColor,
+            flexibleSpace: const FlexibleSpaceBar(
+              background: SnackProfile(),
+            ),
+            bottom: const PreferredSize(
+              preferredSize: Size(double.infinity, 100),
+              child: SnackHeader(),
+            ),
+          ),
+          ...List.generate(
+            homeData.length,
+            (index) => CategorySectionGrid(category: homeData[index]),
+          ),
+          const SliverToBoxAdapter(child: SizedBox(height: 22)),
         ],
       ),
     );
@@ -50,9 +67,8 @@ class CategorySectionGrid extends StatelessWidget {
     return SliverMainAxisGroup(
       slivers: [
         // Issue: https://github.com/flutter/flutter/issues/134535
-        SliverPersistentHeader(
-          pinned: true,
-          delegate: MyHeader(category.name),
+        SliverMyStickyTitle(
+          child: SectionTitle(name: category.name),
         ),
         const SliverToBoxAdapter(child: SizedBox(height: 10)),
         SliverPadding(
@@ -102,6 +118,7 @@ class MyHeader extends SliverPersistentHeaderDelegate {
   ) {
     return SectionTitle(
       name: name,
+      showShadow: shrinkOffset > 0,
     );
   }
 }
